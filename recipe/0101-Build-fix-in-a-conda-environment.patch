@@ -1,0 +1,34 @@
+From 0e79ff21fa4d6b2c6cbf5b2cf78caa530a878728 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Mon, 28 Sep 2020 11:07:44 +0000
+Subject: [PATCH] Build fix in a conda environment
+
+---
+ oss_scripts/configure.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
+index 7ba06ff..fabef59 100755
+--- a/oss_scripts/configure.sh
++++ b/oss_scripts/configure.sh
+@@ -25,14 +25,14 @@ function write_action_env_to_bazelrc() {
+ # Remove .bazelrc if it already exist
+ [ -e .bazelrc ] && rm .bazelrc
+ 
+-if [[ $(pip show tensorflow) == *tensorflow* ]] || [[ $(pip show tf-nightly) == *tf-nightly* ]] ; then
++if [[ $(conda list tensorflow) == *tensorflow* ]] || [[ $(pip show tf-nightly) == *tf-nightly* ]] ; then
+   echo 'Using installed tensorflow.'
+ else
+   echo 'Installing tensorflow.'
+-  pip install tensorflow==2.3.0
++  conda install tensorflow=2.3.0
+ fi
+ 
+-write_to_bazelrc "build:manylinux2010 --crosstool_top=@org_tensorflow//third_party/toolchains/preconfig/ubuntu16.04/gcc7_manylinux2010-nvcc-cuda10.1:toolchain"
++#write_to_bazelrc "build:manylinux2010 --crosstool_top=@org_tensorflow//third_party/toolchains/preconfig/ubuntu16.04/gcc7_manylinux2010-nvcc-cuda10.1:toolchain"
+ write_to_bazelrc "build --spawn_strategy=standalone"
+ write_to_bazelrc "build --strategy=Genrule=standalone"
+ write_to_bazelrc "build -c opt"
+-- 
+1.8.3.1
+
