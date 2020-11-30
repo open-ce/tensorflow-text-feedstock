@@ -21,7 +21,7 @@ index 295e900..93dbfdf 100755
  else
    echo 'Installing tensorflow.'
 -  pip install tensorflow==2.4.0rc1
-+  conda install tensorflow==2.4.0 -c file://home/builder/condabuild
++  conda install tensorflow==2.4.0
  fi
  
  write_to_bazelrc "build:manylinux2010 --crosstool_top=@org_tensorflow//third_party/toolchains/preconfig/ubuntu16.04/gcc7_manylinux2010-nvcc-cuda10.1:toolchain"
