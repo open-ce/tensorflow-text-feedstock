@@ -6,7 +6,7 @@ package:
 
 source:
   git_url: https://github.com/tensorflow/text.git
-  git_rev: v{{ build_version }}-b0
+  git_rev: v{{ build_version }}-rc0
   patches:
     - 0101-Build-fix-in-a-conda-environment.patch
 

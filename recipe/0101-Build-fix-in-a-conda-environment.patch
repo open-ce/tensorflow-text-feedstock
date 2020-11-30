@@ -1,17 +1,17 @@
-From ae60ba2a397172734d9718d00b1a739e695e1479 Mon Sep 17 00:00:00 2001
+From cc79f83fbbfcdd5d79ec38c2b5f91b18015a19c9 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Thu, 12 Nov 2020 06:27:47 +0000
-Subject: [PATCH] Fix build in conda environment
+Date: Mon, 30 Nov 2020 08:25:45 +0000
+Subject: [PATCH] Some bazel rc chnages
 
 ---
- oss_scripts/configure.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ oss_scripts/configure.sh | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
-index 4408e30..be6e469 100755
+index 295e900..93dbfdf 100755
 --- a/oss_scripts/configure.sh
 +++ b/oss_scripts/configure.sh
-@@ -25,14 +25,14 @@ function write_action_env_to_bazelrc() {
+@@ -25,11 +25,11 @@ function write_action_env_to_bazelrc() {
  # Remove .bazelrc if it already exist
  [ -e .bazelrc ] && rm .bazelrc
  
@@ -20,15 +20,20 @@ index 4408e30..be6e469 100755
    echo 'Using installed tensorflow.'
  else
    echo 'Installing tensorflow.'
--  pip install tensorflow==2.3.1
-+  conda install tensorflow==2.4.0
+-  pip install tensorflow==2.4.0rc1
++  conda install tensorflow==2.4.0 -c file://home/builder/condabuild
  fi
  
--write_to_bazelrc "build:manylinux2010 --crosstool_top=@org_tensorflow//third_party/toolchains/preconfig/ubuntu16.04/gcc7_manylinux2010-nvcc-cuda10.1:toolchain"
-+#write_to_bazelrc "build:manylinux2010 --crosstool_top=@org_tensorflow//third_party/toolchains/preconfig/ubuntu16.04/gcc7_manylinux2010-nvcc-cuda10.1:toolchain"
- write_to_bazelrc "build --spawn_strategy=standalone"
- write_to_bazelrc "build --strategy=Genrule=standalone"
+ write_to_bazelrc "build:manylinux2010 --crosstool_top=@org_tensorflow//third_party/toolchains/preconfig/ubuntu16.04/gcc7_manylinux2010-nvcc-cuda10.1:toolchain"
+@@ -38,6 +38,8 @@ write_to_bazelrc "build --strategy=Genrule=standalone"
  write_to_bazelrc "build -c opt"
+ write_to_bazelrc "build --define=framework_shared_object=true"
+ write_to_bazelrc "build --experimental_repo_remote_exec"
++write_to_bazelrc "build --action_env PYTHON_BIN_PATH=\"$PYTHON\""
++
+ 
+ # Config for Android build.
+ write_to_bazelrc "build:android --crosstool_top=//external:android/crosstool"
 -- 
-1.8.3.1
+2.18.4
 
