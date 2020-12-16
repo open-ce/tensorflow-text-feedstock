@@ -11,7 +11,7 @@ source:
     - 0101-Build-fix-in-a-conda-environment.patch
 
 build:
-  number: 1
+  number: 2
   string: py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
 
 requirements:
@@ -26,14 +26,14 @@ requirements:
     - python {{ python }}
     - numpy {{ numpy }}
     - tensorflow-base {{ tensorflow }}
-    - typing_extensions {{ typing_extensions }}
+    - typing_extensions {{ typing_extensions }}     # [py<38]
     - python-flatbuffers {{ flatbuffers }}
   run:
     - python {{ python }}
     - numpy {{ numpy }}
     - tensorflow-base {{ tensorflow }}
     - tensorflow-hub {{ tensorflow_hub }}
-    - typing_extensions {{ typing_extensions }}
+    - typing_extensions {{ typing_extensions }}     # [py<38]
 
 about:
   home: http://tensorflow.org/
