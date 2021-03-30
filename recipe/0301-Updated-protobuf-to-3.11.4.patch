@@ -1,0 +1,32 @@
+From 9184e8a5850d1e1d6320f7e7ef113f6a5819f082 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Tue, 30 Mar 2021 10:39:41 +0000
+Subject: [PATCH] Updated protobuf to 3.11.4
+
+---
+ WORKSPACE | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/WORKSPACE b/WORKSPACE
+index 5fbdc5d..97a225c 100644
+--- a/WORKSPACE
++++ b/WORKSPACE
+@@ -34,11 +34,11 @@ http_archive(
+ 
+ http_archive(
+     name = "com_google_protobuf",
+-    sha256 = "cfcba2df10feec52a84208693937c17a4b5df7775e1635c1e3baffc487b24c9b",
+-    strip_prefix = "protobuf-3.9.2",
++    sha256 = "9748c0d90e54ea09e5e75fb7fac16edce15d2028d4356f32211cfa3c0e956564",
++    strip_prefix = "protobuf-3.11.4",
+     urls = [
+-        "https://storage.googleapis.com/mirror.tensorflow.org/github.com/protocolbuffers/protobuf/archive/v3.9.2.zip",
+-        "https://github.com/protocolbuffers/protobuf/archive/v3.9.2.zip",
++        "https://storage.googleapis.com/mirror.tensorflow.org/github.com/protocolbuffers/protobuf/archive/v3.11.4.zip",
++        "https://github.com/protocolbuffers/protobuf/archive/v3.11.4.zip",
+     ],
+ )
+ 
+-- 
+1.8.3.1
+
