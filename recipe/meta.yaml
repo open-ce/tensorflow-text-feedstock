@@ -9,7 +9,7 @@ source:
   git_rev: {{ build_version }}
   patches:
     - 0101-Build-fix-in-a-conda-environment.patch
-    - 0301-Updated-protobuf-to-3.11.2.patch
+    - 0301-Updated-protobuf-to-3.11.2.patch     #[protobuf == "3.11.2"]
 
 build:
   number: 4
