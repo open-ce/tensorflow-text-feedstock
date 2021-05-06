@@ -1,0 +1,33 @@
+From 1a4f75961f34fc2e0d79ca385da1b49605857ad8 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Thu, 6 May 2021 12:20:25 -0400
+Subject: [PATCH] TF Text to use its own protobuf
+
+---
+ WORKSPACE | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/WORKSPACE b/WORKSPACE
+index 730d613..324067b 100644
+--- a/WORKSPACE
++++ b/WORKSPACE
+@@ -13,6 +13,16 @@ http_archive(
+     patch_args = ["-p1"],
+ )
+ 
++http_archive(
++    name = "com_google_protobuf",
++    sha256 = "e4f8bedb19a93d0dccc359a126f51158282e0b24d92e0cad9c76a9699698268d",
++    strip_prefix = "protobuf-3.11.2",
++    urls = [
++        "https://storage.googleapis.com/mirror.tensorflow.org/github.com/protocolbuffers/protobuf/archive/v3.11.2.zip",
++        "https://github.com/protocolbuffers/protobuf/archive/v3.11.2.zip",
++    ],
++)
++
+ http_archive(
+     name = "icu",
+     strip_prefix = "icu-release-64-2",
+-- 
+2.23.0
+

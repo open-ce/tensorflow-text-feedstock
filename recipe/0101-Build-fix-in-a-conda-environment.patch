@@ -1,14 +1,14 @@
-From b8dd2d156c6e5bd12148b5f18e64666675353843 Mon Sep 17 00:00:00 2001
+From ff3fd37e19f3e5bc29b24b8bff60c2ff9fe1d942 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Fri, 18 Dec 2020 02:56:27 -0600
-Subject: [PATCH] Build fixed in a conda environment
+Date: Thu, 6 May 2021 08:52:20 -0400
+Subject: [PATCH] Conda changes
 
 ---
  oss_scripts/configure.sh | 8 +++++---
  1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
-index 5805df2..d02c5af 100755
+index a90ef6d..5526225 100755
 --- a/oss_scripts/configure.sh
 +++ b/oss_scripts/configure.sh
 @@ -37,11 +37,11 @@ function is_macos() {
@@ -20,8 +20,8 @@ index 5805df2..d02c5af 100755
    echo 'Using installed tensorflow.'
  else
    echo 'Installing tensorflow.'
--  pip install tensorflow==2.4.0
-+  conda install -y tensorflow==2.4.0
+-  pip install tensorflow==2.5.0rc0
++  conda install tensorflow==2.5.0
  fi
  
  if is_windows; then
@@ -42,5 +42,5 @@ index 5805df2..d02c5af 100755
  # Config for Android build.
  write_to_bazelrc "build:android --crosstool_top=//external:android/crosstool"
 -- 
-2.18.2
+2.23.0
 
