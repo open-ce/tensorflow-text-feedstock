@@ -12,14 +12,16 @@ source:
     - 0301-Updated-protobuf-to-3.11.2.patch     #[protobuf == "3.11.2"]
 
 build:
-  number: 5
+  number: 6
   string: h{{ PKG_HASH }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
   host:
     - git >=2.2
     - bazel {{ bazel }}
@@ -29,6 +31,9 @@ requirements:
     - tensorflow-base {{ tensorflow }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
     - python-flatbuffers {{ flatbuffers }}
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
   run:
     - python {{ python }}
     - numpy {{ numpy }}
