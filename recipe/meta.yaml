@@ -41,6 +41,12 @@ requirements:
     - tensorflow-hub {{ tensorflow_hub }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
 
+test:
+  requires:
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
+
 about:
   home: http://tensorflow.org/
   license: Apache 2.0
