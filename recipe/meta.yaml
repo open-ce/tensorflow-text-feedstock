@@ -14,6 +14,9 @@ source:
 build:
   number: 6
   string: h{{ PKG_HASH }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
+  ignore_run_exports:
+    - libgcc-ng
+    - libstdcxx-ng
 
 requirements:
   build:
@@ -40,9 +43,6 @@ requirements:
     - tensorflow-base {{ tensorflow }}
     - tensorflow-hub {{ tensorflow_hub }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
-
-test:
-  requires:
     # Use pins to control cos6/cos7 match
     - libgcc-ng  {{ libgcc }}
     - libstdcxx-ng  {{ libstdcxx }}
