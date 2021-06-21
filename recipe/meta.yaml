@@ -13,13 +13,18 @@ source:
 
 build:
   number: 1
-  string: py{{ python | replace(".", "") }}_{{ PKG_BUILDNUM }}
+  string: h{{ PKG_HASH }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
+  ignore_run_exports:
+    - libgcc-ng
+    - libstdcxx-ng
 
 requirements:
   build:
     - {{ compiler('c') }}
     - {{ compiler('cxx') }}
-
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
   host:
     - git >=2.2
     - bazel {{ bazel }}
@@ -29,12 +34,18 @@ requirements:
     - tensorflow-base {{ tensorflow }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
     - python-flatbuffers {{ flatbuffers }}
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
   run:
     - python {{ python }}
     - numpy {{ numpy }}
     - tensorflow-base {{ tensorflow }}
     - tensorflow-hub {{ tensorflow_hub }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
+    # Use pins to control cos6/cos7 match
+    - libgcc-ng  {{ libgcc }}
+    - libstdcxx-ng  {{ libstdcxx }}
 
 about:
   home: http://tensorflow.org/
