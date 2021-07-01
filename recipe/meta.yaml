@@ -1,4 +1,4 @@
-{% set build_version = "2.4.1" %}
+{% set build_version = "2.5.0" %}
 
 package:
   name: tensorflow-text
@@ -6,13 +6,13 @@ package:
 
 source:
   git_url: https://github.com/tensorflow/text.git
-  git_rev: {{ build_version }}
+  git_rev: v{{ build_version }}
   patches:
     - 0101-Build-fix-in-a-conda-environment.patch
-    - 0301-Updated-protobuf-to-3.11.2.patch     #[protobuf == "3.11.2"]
+    - 0301-TF-Text-to-use-its-own-protobuf.patch       #[protobuf == "3.11.2"]
 
 build:
-  number: 6
+  number: 1
   string: h{{ PKG_HASH }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
   ignore_run_exports:
     - libgcc-ng
