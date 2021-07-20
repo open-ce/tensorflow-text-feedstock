@@ -9,10 +9,10 @@ source:
   git_rev: v{{ build_version }}
   patches:
     - 0101-Build-fix-in-a-conda-environment.patch
-    - 0301-TF-Text-to-use-its-own-protobuf.patch       #[protobuf == "3.11.2"]
+    - 0301-TF-Text-to-use-its-own-protobuf.patch       #[protobuf == "3.14.*"]
 
 build:
-  number: 4
+  number: 5
   string: h{{ PKG_HASH }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 
 requirements:
