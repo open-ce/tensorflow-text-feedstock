@@ -21,7 +21,7 @@ index 5805df2..d02c5af 100755
  else
    echo 'Installing tensorflow.'
 -  pip install tensorflow==2.4.0
-+  conda install -y tensorflow==2.4.0
++  conda install -y tensorflow==2.4.*
  fi
  
  if is_windows; then
