@@ -1,14 +1,14 @@
-From 4472d074834ae4dedbee3ae8d5e95936bed5460f Mon Sep 17 00:00:00 2001
+From 5b7949eafb604297cf6cf40d5e98ffe933d5bb4a Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Fri, 20 Aug 2021 06:38:15 -0400
+Date: Wed, 27 Oct 2021 09:03:19 -0400
 Subject: [PATCH] Conda packaging changes
 
 ---
- oss_scripts/configure.sh | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ oss_scripts/configure.sh | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
-index 7752de9..2faab46 100755
+index 2e654c8..a59d31c 100755
 --- a/oss_scripts/configure.sh
 +++ b/oss_scripts/configure.sh
 @@ -37,11 +37,11 @@ function is_macos() {
@@ -20,12 +20,12 @@ index 7752de9..2faab46 100755
    echo 'Using installed tensorflow.'
  else
    echo 'Installing tensorflow.'
--  pip install tensorflow==2.6.0
-+  conda install -y tensorflow==2.6.0
+-  pip install tensorflow==2.7.0rc0
++  conda install -y tensorflow=2.7.0
  fi
  
  if is_windows; then
-@@ -49,12 +49,13 @@ if is_windows; then
+@@ -49,7 +49,7 @@ if is_windows; then
    sed -i -e 's/":headers",$/":headers", ":windows_static_link_data",/' third_party/icu/BUILD.bzl
  fi
  
@@ -34,12 +34,6 @@ index 7752de9..2faab46 100755
  write_to_bazelrc "build --spawn_strategy=standalone"
  write_to_bazelrc "build --strategy=Genrule=standalone"
  write_to_bazelrc "build -c opt"
- write_to_bazelrc "build --define=framework_shared_object=true"
- write_to_bazelrc "build --experimental_repo_remote_exec"
-+write_to_bazelrc "build --action_env PYTHON_BIN_PATH=\"$PYTHON\""
- 
- # By default, build in C++ 14 mode.
- write_to_bazelrc "build:android --cxxopt=-std=c++14"
 -- 
 2.23.0
 
