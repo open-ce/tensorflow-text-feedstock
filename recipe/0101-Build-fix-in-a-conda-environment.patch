@@ -1,14 +1,14 @@
-From 5b7949eafb604297cf6cf40d5e98ffe933d5bb4a Mon Sep 17 00:00:00 2001
+From 4c0013aa80419d823cb0757cf8982ae657de8cc6 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Wed, 27 Oct 2021 09:03:19 -0400
-Subject: [PATCH] Conda packaging changes
+Date: Fri, 12 Nov 2021 06:04:26 -0500
+Subject: [PATCH] Build fix in a conda environment
 
 ---
  oss_scripts/configure.sh | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
-index 2e654c8..a59d31c 100755
+index e450c34..a59d31c 100755
 --- a/oss_scripts/configure.sh
 +++ b/oss_scripts/configure.sh
 @@ -37,11 +37,11 @@ function is_macos() {
@@ -20,7 +20,7 @@ index 2e654c8..a59d31c 100755
    echo 'Using installed tensorflow.'
  else
    echo 'Installing tensorflow.'
--  pip install tensorflow==2.7.0rc0
+-  pip install tensorflow==2.7.0
 +  conda install -y tensorflow=2.7.0
  fi
  
@@ -35,5 +35,5 @@ index 2e654c8..a59d31c 100755
  write_to_bazelrc "build --strategy=Genrule=standalone"
  write_to_bazelrc "build -c opt"
 -- 
-2.23.0
+2.32.0
 
