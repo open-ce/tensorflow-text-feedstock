@@ -19,8 +19,9 @@ set -vex
 #Clean up old bazel cache to avoid problems building TF
 bazel clean --expunge
 bazel shutdown
-
+export BAZEL_LINKLIBS=-l%:libstdc++.a
 sh ${SRC_DIR}/oss_scripts/run_build.sh
+
 
 # install using pip from the whl file
 pip install --no-deps $SRC_DIR/tensorflow_text*p${CONDA_PY}*.whl
