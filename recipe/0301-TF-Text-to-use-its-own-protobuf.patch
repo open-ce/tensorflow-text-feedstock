@@ -17,11 +17,11 @@ index 9228f59..507164b 100644
  
 +http_archive(
 +    name = "com_google_protobuf",
-+    sha256 = "bf0e5070b4b99240183b29df78155eee335885e53a8af8683964579c214ad301",
-+    strip_prefix = "protobuf-3.14.0",
++    sha256 = "25f1292d4ea6666f460a2a30038eef121e6c3937ae0f61d610611dfb14b0bd32",
++    strip_prefix = "protobuf-3.19.1",
 +    urls = [
-+        "https://storage.googleapis.com/mirror.tensorflow.org/github.com/protocolbuffers/protobuf/archive/v3.14.0.zip",
-+        "https://github.com/protocolbuffers/protobuf/archive/v3.14.0.zip",
++        "https://storage.googleapis.com/mirror.tensorflow.org/github.com/protocolbuffers/protobuf/archive/v3.19.1.zip",
++        "https://github.com/protocolbuffers/protobuf/archive/v3.19.1.zip",
 +    ],
 +)
 +
