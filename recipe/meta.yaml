@@ -1,4 +1,4 @@
-{% set build_version = "2.7.3" %}
+{% set build_version = "2.8.1" %}
 
 package:
   name: tensorflow-text
@@ -12,7 +12,7 @@ source:
     - 0301-TF-Text-to-use-its-own-protobuf.patch       #[protobuf == "3.19.*"]
 
 build:
-  number: 2
+  number: 1
   string: h{{ PKG_HASH }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 
 requirements:
