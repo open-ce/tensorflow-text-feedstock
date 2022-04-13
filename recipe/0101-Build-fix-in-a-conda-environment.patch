@@ -1,31 +1,36 @@
-From 4c0013aa80419d823cb0757cf8982ae657de8cc6 Mon Sep 17 00:00:00 2001
+From 23e55f6b98d5f0cbf85b99e22214649dc7ed90e2 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Fri, 12 Nov 2021 06:04:26 -0500
+Date: Tue, 15 Mar 2022 07:49:34 -0400
 Subject: [PATCH] Build fix in a conda environment
 
 ---
- oss_scripts/configure.sh | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ oss_scripts/configure.sh      |  6 +++---
+ oss_scripts/prepare_tf_dep.sh | 12 ++++++------
+ 2 files changed, 9 insertions(+), 9 deletions(-)
 
 diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
-index e450c34..a59d31c 100755
+index b8c8e9d..974ddcd 100755
 --- a/oss_scripts/configure.sh
 +++ b/oss_scripts/configure.sh
-@@ -37,11 +37,11 @@ function is_macos() {
+@@ -37,7 +37,7 @@ function is_macos() {
  # Remove .bazelrc if it already exist
  [ -e .bazelrc ] && rm .bazelrc
  
--if [[ $(pip show tensorflow) == *tensorflow* ]] || [[ $(pip show tf-nightly) == *tf-nightly* ]] ; then
-+if [[ $(conda list tensorflow) == *tensorflow* ]] || [[ $(pip show tf-nightly) == *tf-nightly* ]] ; then
+-if [[ $(pip show tensorflow) == *tensorflow* ]] ||
++if [[ $(conda list tensorflow) == *tensorflow* ]] ||
+    [[ $(pip show tensorflow-macos) == *tensorflow-macos* ]] ||
+    [[ $(pip show tf-nightly) == *tf-nightly* ]]; then
    echo 'Using installed tensorflow.'
- else
-   echo 'Installing tensorflow.'
--  pip install tensorflow==2.7.0
-+  conda install -y tensorflow=2.7.0
+@@ -51,7 +51,7 @@ else
+       pip install tensorflow==2.8.0
+     fi
+   else
+-    pip install tensorflow==2.8.0
++    conda install -y tensorflow==2.8.0
+   fi
  fi
  
- if is_windows; then
-@@ -49,7 +49,7 @@ if is_windows; then
+@@ -60,7 +60,7 @@ if is_windows; then
    sed -i -e 's/":headers",$/":headers", ":windows_static_link_data",/' third_party/icu/BUILD.bzl
  fi
  
@@ -34,6 +39,28 @@ index e450c34..a59d31c 100755
  write_to_bazelrc "build --spawn_strategy=standalone"
  write_to_bazelrc "build --strategy=Genrule=standalone"
  write_to_bazelrc "build -c opt"
+diff --git a/oss_scripts/prepare_tf_dep.sh b/oss_scripts/prepare_tf_dep.sh
+index cbca710..f16110b 100755
+--- a/oss_scripts/prepare_tf_dep.sh
++++ b/oss_scripts/prepare_tf_dep.sh
+@@ -16,11 +16,11 @@ sed -i "s/project_version = 'REPLACE_ME'/project_version = '${tf_version}'/" oss
+ sed -i "s/__version__ = .*\$/__version__ = \"${tf_version}\"/" tensorflow_text/__init__.py
+ 
+ # Get commit sha of installed tensorflow
+-short_commit_sha=$($installed_python -c 'import tensorflow as tf; print(tf.__git_version__)' | tail -1 | grep -oP '(?<=-g)[0-9a-f]*$')
+-commit_sha=$(curl -SsL https://github.com/tensorflow/tensorflow/commit/${short_commit_sha} | grep sha-block | grep commit | sed -e 's/.*\([a-f0-9]\{40\}\).*/\1/')
++#short_commit_sha=$($installed_python -c 'import tensorflow as tf; print(tf.__git_version__)' | tail -1 | grep -oP '(?<=-g)[0-9a-f]*$')
++#commit_sha=$(curl -SsL https://github.com/tensorflow/tensorflow/commit/${short_commit_sha} | grep sha-block | grep commit | sed -e 's/.*\([a-f0-9]\{40\}\).*/\1/')
+ 
+ # Update TF dependency to installed tensorflow
+-sed -i "s/strip_prefix = \"tensorflow-2\.[0-9]\+\.[0-9]\+\(-rc[0-9]\+\)\?\",/strip_prefix = \"tensorflow-${commit_sha}\",/" WORKSPACE
+-sed -i "s|\"https://github.com/tensorflow/tensorflow/archive/v.\+\.zip\"|\"https://github.com/tensorflow/tensorflow/archive/${commit_sha}.zip\"|" WORKSPACE
+-prev_shasum=$(grep -A 1 -e "strip_prefix.*tensorflow-" WORKSPACE | tail -1 | awk -F '"' '{print $2}')
+-sed -i "s/sha256 = \"${prev_shasum}\",//" WORKSPACE
++#sed -i "s/strip_prefix = \"tensorflow-2\.[0-9]\+\.[0-9]\+\(-rc[0-9]\+\)\?\",/strip_prefix = \"tensorflow-${commit_sha}\",/" WORKSPACE
++#sed -i "s|\"https://github.com/tensorflow/tensorflow/archive/v.\+\.zip\"|\"https://github.com/tensorflow/tensorflow/archive/${commit_sha}.zip\"|" WORKSPACE
++#prev_shasum=$(grep -A 1 -e "strip_prefix.*tensorflow-" WORKSPACE | tail -1 | awk -F '"' '{print $2}')
++#sed -i "s/sha256 = \"${prev_shasum}\",//" WORKSPACE
 -- 
-2.32.0
+2.23.0
 
