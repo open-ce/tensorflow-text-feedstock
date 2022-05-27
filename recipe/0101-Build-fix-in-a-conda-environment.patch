@@ -1,15 +1,15 @@
-From e40491e5757e43b7c8dd8d9bdec844382057fc64 Mon Sep 17 00:00:00 2001
+From f1f814683bf2c854631862c179f602eba6acd35e Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Wed, 4 May 2022 14:06:57 +0000
+Date: Fri, 27 May 2022 09:15:21 -0400
 Subject: [PATCH] Build fix in a conda environment
 
 ---
- oss_scripts/configure.sh      |  8 ++++----
- oss_scripts/prepare_tf_dep.sh | 12 ++++++------
- 2 files changed, 10 insertions(+), 10 deletions(-)
+ oss_scripts/configure.sh      |  4 ++--
+ oss_scripts/prepare_tf_dep.sh | 22 +++++++++++-----------
+ 2 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
-index b8c8e9d..331e3cb 100755
+index 5b22f24..0b84f4e 100755
 --- a/oss_scripts/configure.sh
 +++ b/oss_scripts/configure.sh
 @@ -37,7 +37,7 @@ function is_macos() {
@@ -22,52 +22,46 @@ index b8c8e9d..331e3cb 100755
     [[ $(pip show tf-nightly) == *tf-nightly* ]]; then
    echo 'Using installed tensorflow.'
 @@ -51,7 +51,7 @@ else
-       pip install tensorflow==2.8.0
+       pip install tensorflow==2.9.0
      fi
    else
--    pip install tensorflow==2.8.0
-+    conda install -y tensorflow==2.8.0
+-    pip install tensorflow==2.9.0
++    conda install -y tensorflow==2.9.*
    fi
  fi
  
-@@ -60,13 +60,13 @@ if is_windows; then
-   sed -i -e 's/":headers",$/":headers", ":windows_static_link_data",/' third_party/icu/BUILD.bzl
- fi
- 
--write_to_bazelrc "build:manylinux2010 --crosstool_top=@ubuntu18.04-gcc7_manylinux2010-cuda11.2-cudnn8.1-tensorrt7.2_config_cuda//crosstool:toolchain"
-+#write_to_bazelrc "build:manylinux2010 --crosstool_top=@ubuntu18.04-gcc7_manylinux2010-cuda11.2-cudnn8.1-tensorrt7.2_config_cuda//crosstool:toolchain"
- write_to_bazelrc "build --spawn_strategy=standalone"
- write_to_bazelrc "build --strategy=Genrule=standalone"
- write_to_bazelrc "build -c opt"
- write_to_bazelrc "build --define=framework_shared_object=true"
- write_to_bazelrc "build --experimental_repo_remote_exec"
--write_to_bazelrc "build --incompatible_blacklisted_protos_requires_proto_info=false"
-+#write_to_bazelrc "build --incompatible_blacklisted_protos_requires_proto_info=false"
- # By default, build in C++ 14 mode.
- write_to_bazelrc "build --cxxopt=-std=c++14"
- write_to_bazelrc "build --host_cxxopt=-std=c++14"
 diff --git a/oss_scripts/prepare_tf_dep.sh b/oss_scripts/prepare_tf_dep.sh
-index cbca710..f16110b 100755
+index d9a8228..0749fbe 100755
 --- a/oss_scripts/prepare_tf_dep.sh
 +++ b/oss_scripts/prepare_tf_dep.sh
-@@ -16,11 +16,11 @@ sed -i "s/project_version = 'REPLACE_ME'/project_version = '${tf_version}'/" oss
- sed -i "s/__version__ = .*\$/__version__ = \"${tf_version}\"/" tensorflow_text/__init__.py
+@@ -22,16 +22,16 @@ sed -i $ext "s/__version__ = .*\$/__version__ = \"${tf_version}\"/" tensorflow_t
  
  # Get commit sha of installed tensorflow
--short_commit_sha=$($installed_python -c 'import tensorflow as tf; print(tf.__git_version__)' | tail -1 | grep -oP '(?<=-g)[0-9a-f]*$')
+ # For some unknown reason this now needs to be split into two commands on Windows
+-short_commit_sha=$($installed_python -c 'import tensorflow as tf; print(tf.__git_version__)' | tail -1)
+-if [[ "${osname}" == "darwin" ]]; then
+-  short_commit_sha=$(echo $short_commit_sha | perl -nle 'print $& while m{(?<=-g)[0-9a-f]*$}g')
+-else
+-  short_commit_sha=$(echo $short_commit_sha | grep -oP '(?<=-g)[0-9a-f]*$')
+-fi
 -commit_sha=$(curl -SsL https://github.com/tensorflow/tensorflow/commit/${short_commit_sha} | grep sha-block | grep commit | sed -e 's/.*\([a-f0-9]\{40\}\).*/\1/')
-+#short_commit_sha=$($installed_python -c 'import tensorflow as tf; print(tf.__git_version__)' | tail -1 | grep -oP '(?<=-g)[0-9a-f]*$')
++#short_commit_sha=$($installed_python -c 'import tensorflow as tf; print(tf.__git_version__)' | tail -1)
++#if [[ "${osname}" == "darwin" ]]; then
++#  short_commit_sha=$(echo $short_commit_sha | perl -nle 'print $& while m{(?<=-g)[0-9a-f]*$}g')
++#else
++#  short_commit_sha=$(echo $short_commit_sha | grep -oP '(?<=-g)[0-9a-f]*$')
++#fi
 +#commit_sha=$(curl -SsL https://github.com/tensorflow/tensorflow/commit/${short_commit_sha} | grep sha-block | grep commit | sed -e 's/.*\([a-f0-9]\{40\}\).*/\1/')
  
  # Update TF dependency to installed tensorflow
--sed -i "s/strip_prefix = \"tensorflow-2\.[0-9]\+\.[0-9]\+\(-rc[0-9]\+\)\?\",/strip_prefix = \"tensorflow-${commit_sha}\",/" WORKSPACE
--sed -i "s|\"https://github.com/tensorflow/tensorflow/archive/v.\+\.zip\"|\"https://github.com/tensorflow/tensorflow/archive/${commit_sha}.zip\"|" WORKSPACE
+-sed -E -i $ext "s/strip_prefix = \"tensorflow-2.+\",/strip_prefix = \"tensorflow-${commit_sha}\",/" WORKSPACE
+-sed -E -i $ext "s|\"https://github.com/tensorflow/tensorflow/archive/v.+\.zip\"|\"https://github.com/tensorflow/tensorflow/archive/${commit_sha}.zip\"|" WORKSPACE
 -prev_shasum=$(grep -A 1 -e "strip_prefix.*tensorflow-" WORKSPACE | tail -1 | awk -F '"' '{print $2}')
--sed -i "s/sha256 = \"${prev_shasum}\",//" WORKSPACE
-+#sed -i "s/strip_prefix = \"tensorflow-2\.[0-9]\+\.[0-9]\+\(-rc[0-9]\+\)\?\",/strip_prefix = \"tensorflow-${commit_sha}\",/" WORKSPACE
-+#sed -i "s|\"https://github.com/tensorflow/tensorflow/archive/v.\+\.zip\"|\"https://github.com/tensorflow/tensorflow/archive/${commit_sha}.zip\"|" WORKSPACE
+-sed -i $ext "s/sha256 = \"${prev_shasum}\",//" WORKSPACE
++#sed -E -i $ext "s/strip_prefix = \"tensorflow-2.+\",/strip_prefix = \"tensorflow-${commit_sha}\",/" WORKSPACE
++#sed -E -i $ext "s|\"https://github.com/tensorflow/tensorflow/archive/v.+\.zip\"|\"https://github.com/tensorflow/tensorflow/archive/${commit_sha}.zip\"|" WORKSPACE
 +#prev_shasum=$(grep -A 1 -e "strip_prefix.*tensorflow-" WORKSPACE | tail -1 | awk -F '"' '{print $2}')
-+#sed -i "s/sha256 = \"${prev_shasum}\",//" WORKSPACE
++#sed -i $ext "s/sha256 = \"${prev_shasum}\",//" WORKSPACE
 -- 
-2.34.1
+2.23.0
 
