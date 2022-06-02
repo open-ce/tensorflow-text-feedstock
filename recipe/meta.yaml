@@ -10,6 +10,7 @@ source:
   patches:
     - 0101-Build-fix-in-a-conda-environment.patch
     - 0301-TF-Text-to-use-its-own-protobuf.patch       #[protobuf == "3.19.*"]
+    - 0302-Updated-eigen-in-TF.patch                   #[ppc64le]
 
 build:
   number: 1
