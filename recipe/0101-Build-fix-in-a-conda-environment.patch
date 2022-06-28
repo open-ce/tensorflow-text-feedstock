@@ -1,15 +1,16 @@
-From f1f814683bf2c854631862c179f602eba6acd35e Mon Sep 17 00:00:00 2001
+From 014382fe6ac8f1e4e5982a35439e8c21a0044377 Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Fri, 27 May 2022 09:15:21 -0400
-Subject: [PATCH] Build fix in a conda environment
+Date: Tue, 28 Jun 2022 10:36:08 +0000
+Subject: [PATCH] Build TF Text in a conda environment
 
 ---
  oss_scripts/configure.sh      |  4 ++--
- oss_scripts/prepare_tf_dep.sh | 22 +++++++++++-----------
- 2 files changed, 13 insertions(+), 13 deletions(-)
+ oss_scripts/prepare_tf_dep.sh | 25 ++++++++++++++-----------
+ oss_scripts/run_build.sh      |  6 +++---
+ 3 files changed, 19 insertions(+), 16 deletions(-)
 
 diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
-index 5b22f24..0b84f4e 100755
+index 5b22f24..2de48a3 100755
 --- a/oss_scripts/configure.sh
 +++ b/oss_scripts/configure.sh
 @@ -37,7 +37,7 @@ function is_macos() {
@@ -26,16 +27,21 @@ index 5b22f24..0b84f4e 100755
      fi
    else
 -    pip install tensorflow==2.9.0
-+    conda install -y tensorflow==2.9.*
++    conda install -y tensorflow==2.9.1
    fi
  fi
  
 diff --git a/oss_scripts/prepare_tf_dep.sh b/oss_scripts/prepare_tf_dep.sh
-index d9a8228..0749fbe 100755
+index d9a8228..b515d93 100755
 --- a/oss_scripts/prepare_tf_dep.sh
 +++ b/oss_scripts/prepare_tf_dep.sh
-@@ -22,16 +22,16 @@ sed -i $ext "s/__version__ = .*\$/__version__ = \"${tf_version}\"/" tensorflow_t
+@@ -20,18 +20,21 @@ sed -i $ext "s/project_version = 'REPLACE_ME'/project_version = '${tf_version}'/
+ # update __version__
+ sed -i $ext "s/__version__ = .*\$/__version__ = \"${tf_version}\"/" tensorflow_text/__init__.py
  
++# update TF version branch to download .bazelrc and .bazelversion from.
++sed -E -i 's|curl https://raw.githubusercontent.com/tensorflow/tensorflow/master|curl https://raw.githubusercontent.com/tensorflow/tensorflow/v${tf_version}|' oss_scripts/configure.sh
++
  # Get commit sha of installed tensorflow
  # For some unknown reason this now needs to be split into two commands on Windows
 -short_commit_sha=$($installed_python -c 'import tensorflow as tf; print(tf.__git_version__)' | tail -1)
@@ -62,6 +68,28 @@ index d9a8228..0749fbe 100755
 +#sed -E -i $ext "s|\"https://github.com/tensorflow/tensorflow/archive/v.+\.zip\"|\"https://github.com/tensorflow/tensorflow/archive/${commit_sha}.zip\"|" WORKSPACE
 +#prev_shasum=$(grep -A 1 -e "strip_prefix.*tensorflow-" WORKSPACE | tail -1 | awk -F '"' '{print $2}')
 +#sed -i $ext "s/sha256 = \"${prev_shasum}\",//" WORKSPACE
+diff --git a/oss_scripts/run_build.sh b/oss_scripts/run_build.sh
+index 5cc8c85..168b70a 100755
+--- a/oss_scripts/run_build.sh
++++ b/oss_scripts/run_build.sh
+@@ -10,14 +10,14 @@ if [[ $osname == "Darwin" ]]; then
+   export CC_OPT_FLAGS='-mavx'
+ fi
+ 
+-# Run configure.
+-source oss_scripts/configure.sh
+-
+ # Set tensorflow version
+ if [[ $osname != "Darwin" ]] || [[ ! $(sysctl -n machdep.cpu.brand_string) =~ "Apple" ]]; then
+   source oss_scripts/prepare_tf_dep.sh
+ fi
+ 
++# Run configure.
++source oss_scripts/configure.sh
++
+ # Build the pip package.
+ bazel build --enable_runfiles oss_scripts/pip_package:build_pip_package
+ ./bazel-bin/oss_scripts/pip_package/build_pip_package .
 -- 
-2.23.0
+2.34.1
 

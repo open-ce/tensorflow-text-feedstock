@@ -36,6 +36,12 @@ requirements:
     - tensorflow-hub {{ tensorflow_hub }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
 
+test:
+  requires:
+    - tensorflow-base {{ tensorflow }}
+  imports:
+    - tensorflow_text
+
 about:
   home: http://tensorflow.org/
   license: Apache 2.0
