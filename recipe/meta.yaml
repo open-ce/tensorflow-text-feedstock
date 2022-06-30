@@ -39,6 +39,7 @@ requirements:
 test:
   requires:
     - tensorflow-base {{ tensorflow }}
+    - keras {{ keras }}
   imports:
     - tensorflow_text
 
