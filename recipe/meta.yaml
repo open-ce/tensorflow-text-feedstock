@@ -38,8 +38,8 @@ requirements:
 
 test:
   requires:
-    - tensorflow-base {{ tensorflow }}
-    - keras {{ keras }}
+    - tensorflow {{ tensorflow }}   #[build_type == 'cuda']
+    - tensorflow-cpu {{ tensorflow }}   #[build_type == 'cpu']
   imports:
     - tensorflow_text
 
