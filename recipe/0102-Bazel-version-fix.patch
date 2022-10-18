@@ -1,0 +1,25 @@
+From 71a2dd9119e9194ccda946643acc2df267d69a22 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Wed, 12 Oct 2022 12:08:45 +0000
+Subject: [PATCH] Bazel version fixed
+
+---
+ oss_scripts/run_build.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/oss_scripts/run_build.sh b/oss_scripts/run_build.sh
+index 3197cff..149f961 100755
+--- a/oss_scripts/run_build.sh
++++ b/oss_scripts/run_build.sh
+@@ -14,7 +14,7 @@ fi
+ source oss_scripts/configure.sh
+ 
+ # Verify correct version of Bazel
+-installed_bazel_version=$(bazel version | grep label | sed -e 's/.*: //')
++installed_bazel_version=$(bazel version | grep label | sed -e 's/.*: \(.*\)\- (@non.*)/\1/g')
+ tf_bazel_version=$(cat .bazelversion)
+ if [ "$installed_bazel_version" != "$tf_bazel_version" ]; then
+   echo "Incorrect version of Bazel installed."
+-- 
+2.34.1
+
