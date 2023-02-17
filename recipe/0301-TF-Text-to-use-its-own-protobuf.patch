@@ -1,14 +1,14 @@
-From d03a4bb1c154a429753aaea94ab3b339ef62a05b Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Fri, 12 Nov 2021 06:09:03 -0500
-Subject: [PATCH] TF Text to use its own protobuf
+From c90f2092fe5db8ab246876e4bfba7e19bac2085d Mon Sep 17 00:00:00 2001
+From: Archana Shinde1 <archana.shinde2504@gmail.com>
+Date: Wed, 15 Feb 2023 16:50:18 +0000
+Subject: [PATCH] Protobuf patch in text
 
 ---
  WORKSPACE | 10 ++++++++++
  1 file changed, 10 insertions(+)
 
 diff --git a/WORKSPACE b/WORKSPACE
-index 9228f59..507164b 100644
+index 20fd8fb..8c46712 100644
 --- a/WORKSPACE
 +++ b/WORKSPACE
 @@ -15,6 +15,16 @@ http_archive(
@@ -17,11 +17,11 @@ index 9228f59..507164b 100644
  
 +http_archive(
 +    name = "com_google_protobuf",
-+    sha256 = "25f1292d4ea6666f460a2a30038eef121e6c3937ae0f61d610611dfb14b0bd32",
-+    strip_prefix = "protobuf-3.19.1",
++    sha256 = "387e2c559bb2c7c1bc3798c4e6cff015381a79b2758696afcbf8e88730b47389",
++    strip_prefix = "protobuf-3.19.6",
 +    urls = [
-+        "https://storage.googleapis.com/mirror.tensorflow.org/github.com/protocolbuffers/protobuf/archive/v3.19.1.zip",
-+        "https://github.com/protocolbuffers/protobuf/archive/v3.19.1.zip",
++        "https://storage.googleapis.com/mirror.tensorflow.org/github.com/protocolbuffers/protobuf/archive/v3.19.6.zip",
++        "https://github.com/protocolbuffers/protobuf/archive/v3.19.6.zip",
 +    ],
 +)
 +
@@ -29,5 +29,5 @@ index 9228f59..507164b 100644
      name = "com_google_sentencepiece",
      strip_prefix = "sentencepiece-1.0.0",
 -- 
-2.32.0
+2.34.1
 
