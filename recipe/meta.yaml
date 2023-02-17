@@ -13,7 +13,7 @@ source:
     - 0302-Updated-eigen-in-TF.patch                   #[ppc64le]
 
 build:
-  number: 2
+  number: 3
   string: h{{ PKG_HASH }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 
 requirements:
