@@ -1,7 +1,7 @@
-From c90f2092fe5db8ab246876e4bfba7e19bac2085d Mon Sep 17 00:00:00 2001
-From: Archana Shinde1 <archana.shinde2504@gmail.com>
-Date: Wed, 15 Feb 2023 16:50:18 +0000
-Subject: [PATCH] Protobuf patch in text
+From 7c3d7bd52f7e1dbb98e56395c2fb4cbfe7413ae1 Mon Sep 17 00:00:00 2001
+From: Nishidha Panpaliya <npanpa23@in.ibm.com>
+Date: Tue, 21 Feb 2023 02:34:13 -0500
+Subject: [PATCH] TF Text to use its won protobuf
 
 ---
  WORKSPACE | 10 ++++++++++
@@ -27,7 +27,7 @@ index 20fd8fb..8c46712 100644
 +
  http_archive(
      name = "com_google_sentencepiece",
-     strip_prefix = "sentencepiece-1.0.0",
+     strip_prefix = "sentencepiece-0.1.96",
 -- 
-2.34.1
+2.27.0
 
