@@ -1,7 +1,7 @@
-From 4f4b3dc5342bbcd34a30c81308d0f57e1613f78d Mon Sep 17 00:00:00 2001
+From 659f83d73e65d8652588fadbda794bd6269cb1eb Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Tue, 14 Mar 2023 04:34:07 +0000
-Subject: [PATCH] Build TF Text in a conda environment
+Date: Tue, 28 Mar 2023 08:53:02 +0000
+Subject: [PATCH] Build fix in a conda environment
 
 ---
  oss_scripts/configure.sh      |  4 ++--
@@ -9,7 +9,7 @@ Subject: [PATCH] Build TF Text in a conda environment
  2 files changed, 13 insertions(+), 13 deletions(-)
 
 diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
-index c04bf1b..73f4439 100755
+index d8501f9..f35c1d6 100755
 --- a/oss_scripts/configure.sh
 +++ b/oss_scripts/configure.sh
 @@ -37,7 +37,7 @@ function is_macos() {
@@ -22,11 +22,11 @@ index c04bf1b..73f4439 100755
     [[ $(pip show tf-nightly) == *tf-nightly* ]]; then
    echo 'Using installed tensorflow.'
 @@ -51,7 +51,7 @@ else
-       pip install tensorflow==2.12.0rc0
+       pip install tensorflow==2.12.0
      fi
    else
--    pip install tensorflow==2.12.0rc0
-+    conda install -y tensorflow=2.12.0rc1
+-    pip install tensorflow==2.12.0
++    conda install -y tensorflow=2.12.0
    fi
  fi
  
