@@ -1,27 +1,25 @@
-From 5852e2e10644c1b4dd9ab1bf1eed561e89f86c9d Mon Sep 17 00:00:00 2001
+From 7bcd14a08d92740e725aaf2a9675640432c6566a Mon Sep 17 00:00:00 2001
 From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Tue, 14 Mar 2023 04:50:27 +0000
-Subject: [PATCH] Bazel version fix
+Date: Thu, 13 Jul 2023 12:15:05 +0000
+Subject: [PATCH] Bazel version retrieval
 
 ---
- oss_scripts/run_build.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ oss_scripts/run_build.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/oss_scripts/run_build.sh b/oss_scripts/run_build.sh
-index 3197cff..21ff881 100755
+index 1959ddd..0373470 100755
 --- a/oss_scripts/run_build.sh
 +++ b/oss_scripts/run_build.sh
-@@ -14,8 +14,8 @@ fi
+@@ -14,7 +14,7 @@ fi
  source oss_scripts/configure.sh
  
  # Verify correct version of Bazel
 -installed_bazel_version=$(bazel version | grep label | sed -e 's/.*: //')
--tf_bazel_version=$(cat .bazelversion)
 +installed_bazel_version=$(bazel version | grep label | sed -e 's/.*: \(.*\)\- (@non.*)/\1/g')
-+tf_bazel_version=$(head -n 1 .bazelversion)
+ tf_bazel_version=$(head -n 1 .bazelversion)
  if [ "$installed_bazel_version" != "$tf_bazel_version" ]; then
    echo "Incorrect version of Bazel installed."
-   echo "Version $tf_bazel_version should be installed, but found version ${installed_bazel_version}."
 -- 
-2.34.1
+2.40.1
 
