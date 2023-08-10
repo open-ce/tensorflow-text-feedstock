@@ -10,7 +10,6 @@ source:
   patches:
     - 0101-Build-fix-in-a-conda-environment.patch
     - 0102-Bazel-version-fix.patch
-    - 0301-Fix-jpeg-in-Tensorflow.patch      #[ppc64le]
 
 build:
   number: 1
