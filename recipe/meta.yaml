@@ -1,4 +1,4 @@
-{% set build_version = "2.12.0" %}
+{% set build_version = "2.13.0" %}
 
 package:
   name: tensorflow-text
@@ -10,10 +10,9 @@ source:
   patches:
     - 0101-Build-fix-in-a-conda-environment.patch
     - 0102-Bazel-version-fix.patch
-    - 0301-Fix-jpeg-in-Tensorflow.patch      #[ppc64le]
 
 build:
-  number: 2
+  number: 1
   string: h{{ PKG_HASH }}_py{{ python | replace(".", "") }}_pb{{ protobuf | replace(".*", "")}}_{{ PKG_BUILDNUM }}
 
 requirements:
