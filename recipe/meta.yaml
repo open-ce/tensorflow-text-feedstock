@@ -1,4 +1,4 @@
-{% set build_version = "2.13.0" %}
+{% set build_version = "2.14.0" %}
 
 package:
   name: tensorflow-text
@@ -28,12 +28,14 @@ requirements:
     - tensorflow-base {{ tensorflow }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
     - python-flatbuffers {{ flatbuffers }}
+    - ml_dtypes
   run:
     - python {{ python }}
     - numpy {{ numpy }}
     - tensorflow-base {{ tensorflow }}
     - tensorflow-hub {{ tensorflow_hub }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
+    - ml_dtypes
 
 test:
   requires:

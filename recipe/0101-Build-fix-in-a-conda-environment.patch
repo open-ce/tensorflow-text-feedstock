@@ -1,15 +1,15 @@
-From a8a75aab21615f4441d31bb46f84af0b14b2a1a5 Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Thu, 13 Jul 2023 10:26:13 +0000
+From 077b87830b1d2f370fdbc7e6cf84d33c43ba3ca9 Mon Sep 17 00:00:00 2001
+From: Archana Shinde1 <archana.shinde2504@gmail.com>
+Date: Fri, 22 Dec 2023 09:04:29 +0000
 Subject: [PATCH] Build fix in a conda environment
 
 ---
- oss_scripts/configure.sh      |  4 ++--
+ oss_scripts/configure.sh      |  6 +++---
  oss_scripts/prepare_tf_dep.sh | 22 +++++++++++-----------
- 2 files changed, 13 insertions(+), 13 deletions(-)
+ 2 files changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
-index ac078e2..7b60d37 100755
+index 63839d3..204c91b 100755
 --- a/oss_scripts/configure.sh
 +++ b/oss_scripts/configure.sh
 @@ -37,7 +37,7 @@ function is_macos() {
@@ -21,12 +21,16 @@ index ac078e2..7b60d37 100755
     [[ $(pip show tensorflow-macos) == *tensorflow-macos* ]] ||
     [[ $(pip show tf-nightly) == *tf-nightly* ]]; then
    echo 'Using installed tensorflow.'
-@@ -51,7 +51,7 @@ else
-       pip install tensorflow==2.13.0
+@@ -48,10 +48,10 @@ else
+     if [[ x"$(arch)" == x"arm64" ]]; then
+       pip install tensorflow-macos==2.9.0
+     else
+-      pip install tensorflow==2.14.0
++      conda install -y tensorflow==2.14.0
      fi
    else
--    pip install tensorflow==2.13.0
-+    conda install  -y tensorflow==2.13.0
+-    pip install tensorflow==2.14.0
++    conda install -y tensorflow==2.14.0
    fi
  fi
  
