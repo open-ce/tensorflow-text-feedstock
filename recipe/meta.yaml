@@ -28,14 +28,14 @@ requirements:
     - tensorflow-base {{ tensorflow }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
     - python-flatbuffers {{ flatbuffers }}
-    - ml_dtypes
+    - ml_dtypes {{ ml_dtypes }}
   run:
     - python {{ python }}
     - numpy {{ numpy }}
     - tensorflow-base {{ tensorflow }}
     - tensorflow-hub {{ tensorflow_hub }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
-    - ml_dtypes
+    - ml_dtypes {{ ml_types }}
 
 test:
   requires:
