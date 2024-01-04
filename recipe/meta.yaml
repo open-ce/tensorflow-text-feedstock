@@ -35,7 +35,7 @@ requirements:
     - tensorflow-base {{ tensorflow }}
     - tensorflow-hub {{ tensorflow_hub }}
     - typing_extensions {{ typing_extensions }}     # [py<38]
-    - ml_dtypes {{ ml_types }}
+    - ml_dtypes {{ ml_dtypes }}
 
 test:
   requires:
