@@ -1,6 +1,6 @@
-From 7bcd14a08d92740e725aaf2a9675640432c6566a Mon Sep 17 00:00:00 2001
-From: Nishidha Panpaliya <npanpa23@in.ibm.com>
-Date: Thu, 13 Jul 2023 12:15:05 +0000
+From d2f5695af5be390de7c5e2afbfb1a35a438523f2 Mon Sep 17 00:00:00 2001
+From: Archana Shinde1 <archana.shinde2504@gmail.com>
+Date: Fri, 22 Dec 2023 09:07:07 +0000
 Subject: [PATCH] Bazel version retrieval
 
 ---
@@ -8,7 +8,7 @@ Subject: [PATCH] Bazel version retrieval
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/oss_scripts/run_build.sh b/oss_scripts/run_build.sh
-index 1959ddd..0373470 100755
+index 1959ddd..869698a 100755
 --- a/oss_scripts/run_build.sh
 +++ b/oss_scripts/run_build.sh
 @@ -14,7 +14,7 @@ fi
