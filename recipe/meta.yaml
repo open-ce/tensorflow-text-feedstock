@@ -42,6 +42,7 @@ test:
     - tensorflow {{ tensorflow }}   #[build_type == 'cuda']
     - tensorflow-cpu {{ tensorflow }}   #[build_type == 'cpu']
   imports:
+    - tensorflow
     - tensorflow_text
 
 about:
