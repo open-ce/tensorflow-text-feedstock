@@ -1,0 +1,27 @@
+From 807e75b193fbeee6cae3f932786f574ad2211021 Mon Sep 17 00:00:00 2001
+From: "Archana.Shinde1" <archana.shinde1@ibm.com>
+Date: Thu, 12 Jun 2025 04:51:56 +0000
+Subject: [PATCH] Override the .bazelversion to use 6.5.0
+
+---
+ oss_scripts/configure.sh | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/oss_scripts/configure.sh b/oss_scripts/configure.sh
+index 63839d3..0a00ce8 100755
+--- a/oss_scripts/configure.sh
++++ b/oss_scripts/configure.sh
+@@ -61,7 +61,9 @@ if is_windows; then
+ fi
+ 
+ # Copy the current bazelversion of TF.
+-curl https://raw.githubusercontent.com/tensorflow/tensorflow/r2.14/.bazelversion -o .bazelversion
++# Override the .bazelversion file to use Bazel 6.5.0 instead of 6.1.0.
++#curl https://raw.githubusercontent.com/tensorflow/tensorflow/r2.14/.bazelversion -o .bazelversion
++echo "6.5.0" >> .bazelversion
+ 
+ # Copy the building configuration of TF.
+ curl https://raw.githubusercontent.com/tensorflow/tensorflow/r2.14/.bazelrc -o .bazelrc
+-- 
+2.40.1
+
